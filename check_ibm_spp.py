@@ -109,10 +109,12 @@ def vsnap_info(session,warn_val,crit_val):
 				status = 2
  
 	#perfdata 'label'=value[UOM];[warn];[crit];[min];[max]
+	perf_warn = int(vsnap.sizeTotal*(float(space_warning)/100))
+        perf_crit = int(vsnap.sizeTotal*(float(space_critical)/100))
 	perfdata = " | "
 	for vsnap in vsnaps:
-		perfdata +=" '"+vsnap.name+"'="+str(vsnap.sizeUsed)+"B;;;0;"+str(vsnap.sizeTotal)
-		#print(vsnap.name+'='+str(vsnap.sizeUsed)+'b;;;0;'+str(vsnap.sizeTotal))
+		perfdata +=" '"+vsnap.name+"'="+str(vsnap.sizeUsed)+"B;"+str(perf_warn)+";"+str(perf_crit)+";0;"+str(vsnap.sizeTotal)
+		
 	print(ok_str + '\n' + warn_str + '\n' + crit_str + perfdata)
 	return status
 
